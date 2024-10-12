@@ -22,11 +22,10 @@ class CocoEvaluator:
         self.iou_types = iou_types
         self.coco_eval = {}
         for iou_type in iou_types:
-            self.coco_eval[iou_type] = COCOeval(coco_gt, iouType=iou_type)    #changed because for2 keypoints dataset
-            # coco_eval = COCOeval(coco_gt, iouType=iou_type)
-            # coco_eval.params.kpt_oks_sigmas = np.array([0.5, 0.5]) / 10.0
-            # self.coco_eval[iou_type] = coco_eval
-            # changed this file also /d/Programming/Anaconda/envs/conda_pytorch_venv/Lib/site-packages/pycocotools L-223
+            # self.coco_eval[iou_type] = COCOeval(coco_gt, iouType=iou_type)    #changed because for2 keypoints dataset
+            coco_eval = COCOeval(coco_gt, iouType=iou_type)
+            coco_eval.params.kpt_oks_sigmas = np.array([0.5, 0.5]) / 10.0
+            self.coco_eval[iou_type] = coco_eval
 
         self.img_ids = []
         self.eval_imgs = {k: [] for k in iou_types}

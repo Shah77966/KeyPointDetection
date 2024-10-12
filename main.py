@@ -85,7 +85,8 @@ class ClassDataset(Dataset):
         target = {}
         target["boxes"] = bboxes
         target["labels"] = torch.as_tensor([1 for _ in bboxes], dtype=torch.int64) # all objects are glue tubes
-        target["image_id"] = torch.tensor([idx])
+        # target["image_id"] = torch.tensor([idx])
+        target["image_id"] = idx
         target["area"] = (bboxes[:, 3] - bboxes[:, 1]) * (bboxes[:, 2] - bboxes[:, 0])
         target["iscrowd"] = torch.zeros(len(bboxes), dtype=torch.int64)
         target["keypoints"] = torch.as_tensor(keypoints, dtype=torch.float32)        
@@ -95,7 +96,8 @@ class ClassDataset(Dataset):
         target_original = {}
         target_original["boxes"] = bboxes_original
         target_original["labels"] = torch.as_tensor([1 for _ in bboxes_original], dtype=torch.int64) # all objects are glue tubes
-        target_original["image_id"] = torch.tensor([idx])
+        # target_original["image_id"] = torch.tensor([idx])
+        target_original["image_id"] = idx
         target_original["area"] = (bboxes_original[:, 3] - bboxes_original[:, 1]) * (bboxes_original[:, 2] - bboxes_original[:, 0])
         target_original["iscrowd"] = torch.zeros(len(bboxes_original), dtype=torch.int64)
         target_original["keypoints"] = torch.as_tensor(keypoints_original, dtype=torch.float32)        
@@ -121,8 +123,9 @@ batch = next(iterator)
 # print("Transformed targets:\n", batch[1])
 
 keypoints_classes_ids2names = {0: 'Head', 1: 'Tail'}
-
+"""
 def visualize(image, bboxes, keypoints, image_original=None, bboxes_original=None, keypoints_original=None):
+    print("Visualizing")
     fontsize = 18
 
     for bbox in bboxes:
@@ -158,7 +161,51 @@ def visualize(image, bboxes, keypoints, image_original=None, bboxes_original=Non
         ax[1].imshow(image)
         ax[1].set_title('Transformed image', fontsize=fontsize)
         plt.show()
+"""  
+import cv2
+import os
+
+def visualize(image, bboxes, keypoints, save_path, image_original=None, bboxes_original=None, keypoints_original=None):
+    print("Visualizing and Saving")
+    fontsize = 18
+    print("BBOX", bboxes)
+    # Create the save directory if it doesn't exist
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+
+    # Process the transformed image
+    for bbox in bboxes:
+        start_point = (bbox[0], bbox[1])
+        end_point = (bbox[2], bbox[3])
+        image = cv2.rectangle(image.copy(), start_point, end_point, (0,255,0), 2)
+    
+    for kps in keypoints:
+        for idx, kp in enumerate(kps):
+            image = cv2.circle(image.copy(), tuple(kp), 5, (255,0,0), 10)
+            image = cv2.putText(image.copy(), " " + keypoints_classes_ids2names[idx], tuple(kp), cv2.FONT_HERSHEY_SIMPLEX, 2, (255,0,0), 3, cv2.LINE_AA)
+
+    # Process the original image if available
+    if image_original is not None and keypoints_original is not None:
+        for bbox in bboxes_original:
+            start_point = (bbox[0], bbox[1])
+            end_point = (bbox[2], bbox[3])
+            image_original = cv2.rectangle(image_original.copy(), start_point, end_point, (0,255,0), 2)
         
+        for kps in keypoints_original:
+            for idx, kp in enumerate(kps):
+                image_original = cv2.circle(image_original, tuple(kp), 5, (255,0,0), 10)
+                image_original = cv2.putText(image_original, " " + keypoints_classes_ids2names[idx], tuple(kp), cv2.FONT_HERSHEY_SIMPLEX, 2, (255,0,0), 3, cv2.LINE_AA)
+
+        # Save the original and transformed images side by side
+        combined_image = cv2.hconcat([image_original, image])
+        cv2.imwrite(save_path, combined_image)
+        print(f"Saved combined image to {save_path}")
+
+    else:
+        # Save the transformed image only
+        cv2.imwrite(save_path, image)
+        print(f"Saved transformed image to {save_path}")
+
+
 image = (batch[0][0].permute(1,2,0).numpy() * 255).astype(np.uint8)
 bboxes = batch[1][0]['boxes'].detach().cpu().numpy().astype(np.int32).tolist()
 
@@ -211,7 +258,7 @@ params = [p for p in model.parameters() if p.requires_grad]
 optimizer = torch.optim.SGD(params, lr=0.001, momentum=0.9, weight_decay=0.0005)
 lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.3)
 num_epochs = 5
-
+"""
 for epoch in range(num_epochs):
     train_one_epoch(model, optimizer, data_loader_train, device, epoch, print_freq=1000)
     lr_scheduler.step()
@@ -219,7 +266,8 @@ for epoch in range(num_epochs):
     
 # Save model weights after training
 torch.save(model.state_dict(), 'SavedModel/weights/keypointsrcnn_weights_initial.pth')
-
+"""
+model.load_state_dict(torch.load('SavedModel/weights/keypointsrcnn_weights_initial.pth', weights_only=False))
 # Visualizing model predictions
 iterator = iter(data_loader_test)
 images, targets = next(iterator)
@@ -231,3 +279,28 @@ with torch.no_grad():
     output = model(images)
 
 print("Predictions: \n", output)
+
+##########
+#visualize
+##########
+
+image = (images[0].permute(1,2,0).detach().cpu().numpy() * 255).astype(np.uint8)
+scores = output[0]['scores'].detach().cpu().numpy()
+
+high_scores_idxs = np.where(scores > 0.3)[0].tolist() # Indexes of boxes with scores > 0.7
+post_nms_idxs = torchvision.ops.nms(output[0]['boxes'][high_scores_idxs], output[0]['scores'][high_scores_idxs], 0.3).cpu().numpy() # Indexes of boxes left after applying NMS (iou_threshold=0.3)
+
+# Below, in output[0]['keypoints'][high_scores_idxs][post_nms_idxs] and output[0]['boxes'][high_scores_idxs][post_nms_idxs]
+# Firstly, we choose only those objects, which have score above predefined threshold. This is done with choosing elements with [high_scores_idxs] indexes
+# Secondly, we choose only those objects, which are left after NMS is applied. This is done with choosing elements with [post_nms_idxs] indexes
+
+keypoints = []
+for kps in output[0]['keypoints'][high_scores_idxs][post_nms_idxs].detach().cpu().numpy():
+    keypoints.append([list(map(int, kp[:2])) for kp in kps])
+
+bboxes = []
+for bbox in output[0]['boxes'][high_scores_idxs][post_nms_idxs].detach().cpu().numpy():
+    bboxes.append(list(map(int, bbox.tolist())))
+    
+# visualize(image, bboxes, keypoints)   #plotting
+visualize(image, bboxes, keypoints, save_path="output/transformed_image.jpg")   #Save the image
