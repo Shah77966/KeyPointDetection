@@ -1,2 +1,2 @@
 Dataset/
-SavedModel/weights/*.pth
+SavedModel/weights/keypointsrcnn_weights_initial.pth
