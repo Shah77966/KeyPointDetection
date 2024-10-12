@@ -1,2 +1,2 @@
 Dataset/
-SavedModel/
+SavedModel/weights/*.pth
