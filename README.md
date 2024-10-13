@@ -1,4 +1,3 @@
-````markdown
 # Keypoint Detection Model
 
 This repository contains a keypoint detection model using PyTorch and a custom dataset. The model is based on the `KeypointRCNN` architecture and detects keypoints and bounding boxes for objects in images.
@@ -51,7 +50,6 @@ Dataset/
         ├── images/
         └── annotations/
 ```
-````
 
 - **images/**: Contains all the images for training and testing.
 - **annotations/**: JSON files containing bounding boxes and keypoints for each image.
@@ -104,7 +102,6 @@ albumentations==1.4.18
 matplotlib==3.7.2
 numpy==2.1.2
 opencv_python_headless==4.10.0.84
-Pillow==9.3.0
 Pillow==10.4.0
 pycocotools==2.0.8
 torch==2.0.1+cu117
@@ -122,7 +119,7 @@ pip install -r requirements.txt
 ### Training the Model
 
 1. Make sure your dataset is structured as described above.
-2. Run the `main.py` script to start training:
+2. Run the **`main.py`** script to start training:
 
    ```bash
    python main.py
@@ -152,7 +149,7 @@ The model is based on the `KeypointRCNN` architecture with a ResNet50 backbone. 
 model = get_model(num_keypoints=2)
 ```
 
-This function allows you to specify the number of keypoints you want the model to predict. The default is set to 2 keypoints per object.
+Here, `num_keypoints` refers to the number of keypoints each object in your dataset has. Modify this parameter according to your dataset's needs. For instance, if you're detecting facial landmarks with 5 keypoints, set `num_keypoints=5`.
 
 ## Acknowledgements
 
@@ -163,10 +160,3 @@ This function allows you to specify the number of keypoints you want the model t
 ---
 
 Feel free to reach out with any issues or feature requests!
-
-```
-
-This `README.md` file includes all the key aspects of your project, such as installation instructions, dataset structure, file breakdowns, and how to use the model for training, evaluation, and visualization.
-
-Let me know if you need further modifications!
-```
