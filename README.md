@@ -1,240 +1,172 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/ec559a9f6bfd399b82bb44393651661b08aaf7ba/icons/folder-markdown-open.svg" width="20%" alt="KEYPOINTDETECTION-logo">
-</p>
-<p align="center">
-    <h1 align="center">KEYPOINTDETECTION</h1>
-</p>
-<p align="center">
-    <em><code>❯ REPLACE-ME</code></em>
-</p>
-<p align="center">
-	<!-- local repository, no metadata badges. --></p>
-<p align="center">
-		<em>Built with the tools and technologies:</em>
-</p>
-<p align="center">
-	<img src="https://img.shields.io/badge/NumPy-013243.svg?style=default&logo=NumPy&logoColor=white" alt="NumPy">
-	<img src="https://img.shields.io/badge/Python-3776AB.svg?style=default&logo=Python&logoColor=white" alt="Python">
+````markdown
+# Keypoint Detection Model
 
-</p>
-<br>
+This repository contains a keypoint detection model using PyTorch and a custom dataset. The model is based on the `KeypointRCNN` architecture and detects keypoints and bounding boxes for objects in images.
 
-##  Table of Contents
+## Table of Contents
 
-- [ Overview](#-overview)
-- [ Features](#-features)
-- [ Project Structure](#-project-structure)
-  - [ Project Index](#-project-index)
-- [ Getting Started](#-getting-started)
-  - [ Prerequisites](#-prerequisites)
-  - [ Installation](#-installation)
-  - [ Usage](#-usage)
-  - [ Testing](#-testing)
-- [ Project Roadmap](#-project-roadmap)
-- [ Contributing](#-contributing)
-- [ License](#-license)
-- [ Acknowledgments](#-acknowledgments)
+- [Key Features](#key-features)
+- [Installation](#installation)
+- [Dataset Structure](#dataset-structure)
+- [Training and Evaluation](#training-and-evaluation)
+- [Visualization](#visualization)
+- [File Structure](#file-structure)
+- [Requirements](#requirements)
+- [Usage](#usage)
+- [Model](#model)
+- [Acknowledgements](#acknowledgements)
 
----
+## Key Features
 
-##  Overview
+- **Custom Keypoint Detection:** Detects keypoints and bounding boxes of objects in images.
+- **Augmentation:** Uses `Albumentations` for image and keypoint augmentations.
+- **Visualization:** Provides utilities for visualizing predictions and original annotations.
+- **Pretrained Backbone:** Utilizes a pretrained ResNet50 backbone with customizable RPN anchor sizes.
 
-<code>❯ REPLACE-ME</code>
+## Installation
 
----
-
-##  Features
-
-<code>❯ REPLACE-ME</code>
-
----
-
-##  Project Structure
-
-```sh
-└── KeyPointDetection/
-    ├── coco_eval.py
-    ├── coco_utils.py
-    ├── engine.py
-    ├── group_by_aspect_ratio.py
-    ├── main.py
-    ├── presets.py
-    ├── requirements.txt
-    ├── train.py
-    ├── transforms.py
-    └── utils.py
-```
-
-
-###  Project Index
-<details open>
-	<summary><b><code>C:\USERS\SHAHK\DOCUMENTS\SHAH\PROGRAMMING\DEEP_LEARNING\KEYPOINTDETECTION/</code></b></summary>
-	<details> <!-- __root__ Submodule -->
-		<summary><b>__root__</b></summary>
-		<blockquote>
-			<table>
-			<tr>
-				<td><b><a href='C:\Users\shahk\Documents\Shah\Programming\Deep_Learning\KeyPointDetection/blob/master/coco_eval.py'>coco_eval.py</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='C:\Users\shahk\Documents\Shah\Programming\Deep_Learning\KeyPointDetection/blob/master/coco_utils.py'>coco_utils.py</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='C:\Users\shahk\Documents\Shah\Programming\Deep_Learning\KeyPointDetection/blob/master/engine.py'>engine.py</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='C:\Users\shahk\Documents\Shah\Programming\Deep_Learning\KeyPointDetection/blob/master/group_by_aspect_ratio.py'>group_by_aspect_ratio.py</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='C:\Users\shahk\Documents\Shah\Programming\Deep_Learning\KeyPointDetection/blob/master/main.py'>main.py</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='C:\Users\shahk\Documents\Shah\Programming\Deep_Learning\KeyPointDetection/blob/master/presets.py'>presets.py</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='C:\Users\shahk\Documents\Shah\Programming\Deep_Learning\KeyPointDetection/blob/master/requirements.txt'>requirements.txt</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='C:\Users\shahk\Documents\Shah\Programming\Deep_Learning\KeyPointDetection/blob/master/train.py'>train.py</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='C:\Users\shahk\Documents\Shah\Programming\Deep_Learning\KeyPointDetection/blob/master/transforms.py'>transforms.py</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			<tr>
-				<td><b><a href='C:\Users\shahk\Documents\Shah\Programming\Deep_Learning\KeyPointDetection/blob/master/utils.py'>utils.py</a></b></td>
-				<td><code>❯ REPLACE-ME</code></td>
-			</tr>
-			</table>
-		</blockquote>
-	</details>
-</details>
-
----
-##  Getting Started
-
-###  Prerequisites
-
-Before getting started with KeyPointDetection, ensure your runtime environment meets the following requirements:
-
-- **Programming Language:** Python
-- **Package Manager:** Pip
-
-
-###  Installation
-
-Install KeyPointDetection using one of the following methods:
-
-**Build from source:**
-
-1. Clone the KeyPointDetection repository:
-```sh
-❯ git clone ../KeyPointDetection
-```
-
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/Shah77966/KeyPointDetection.git
+   ```
 2. Navigate to the project directory:
-```sh
-❯ cd KeyPointDetection
+   ```bash
+   cd KeyPointDetection
+   ```
+3. Install the required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+## Dataset Structure
+
+Your dataset should be structured as follows:
+
+```bash
+Dataset/
+    ├── train/
+    │   ├── images/
+    │   └── annotations/
+    └── test/
+        ├── images/
+        └── annotations/
+```
+````
+
+- **images/**: Contains all the images for training and testing.
+- **annotations/**: JSON files containing bounding boxes and keypoints for each image.
+
+## Training and Evaluation
+
+To train the model, adjust the training loop parameters inside `main.py`, such as number of epochs and learning rate. The training loop can be activated by uncommenting the respective code.
+
+```python
+for epoch in range(num_epochs):
+    train_one_epoch(model, optimizer, data_loader_train, device, epoch, print_freq=1000)
+    lr_scheduler.step()
+    evaluate(model, data_loader_test, device)
 ```
 
-3. Install the project dependencies:
+## Visualization
 
+You can visualize both original and transformed images with bounding boxes and keypoints by using the `visualize()` function in `main.py`.
 
-**Using `pip`** &nbsp; [<img align="center" src="https://img.shields.io/badge/Pip-3776AB.svg?style={badge_style}&logo=pypi&logoColor=white" />](https://pypi.org/project/pip/)
+The function will save the output to a specified path:
 
-```sh
-❯ pip install -r requirements.txt
+```python
+visualize(image, bboxes, keypoints, save_path="output/transformed_image.jpg")
 ```
 
+### Example Visualization:
 
+Transformed and original images are saved side by side, with keypoints and bounding boxes drawn in different colors.
 
+## File Structure
 
-###  Usage
-Run KeyPointDetection using the following command:
-**Using `pip`** &nbsp; [<img align="center" src="https://img.shields.io/badge/Pip-3776AB.svg?style={badge_style}&logo=pypi&logoColor=white" />](https://pypi.org/project/pip/)
+Here’s a breakdown of the key files:
 
-```sh
-❯ python {entrypoint}
+- **main.py**: Contains the core logic for data loading, model creation, training, and visualization.
+- **coco_eval.py**: COCO evaluation utilities.
+- **coco_util.py**: Helper functions for COCO datasets.
+- **engine.py**: Training and evaluation logic.
+- **group_by_aspect.py**: Groups images by aspect ratio for better batching.
+- **presets.py**: Contains preset configurations for training.
+- **train.py**: Training utilities.
+- **transforms.py**: Data augmentation and transformation utilities.
+- **utils.py**: General utilities such as collate functions.
+
+## Requirements
+
+To set up the environment, install the following dependencies listed in the `requirements.txt` file:
+
+```bash
+albumentations==1.4.18
+matplotlib==3.7.2
+numpy==2.1.2
+opencv_python_headless==4.10.0.84
+Pillow==9.3.0
+Pillow==10.4.0
+pycocotools==2.0.8
+torch==2.0.1+cu117
+torchvision==0.15.2+cu117
 ```
 
+You can install all dependencies using the following command:
 
-###  Testing
-Run the test suite using the following command:
-**Using `pip`** &nbsp; [<img align="center" src="https://img.shields.io/badge/Pip-3776AB.svg?style={badge_style}&logo=pypi&logoColor=white" />](https://pypi.org/project/pip/)
-
-```sh
-❯ pytest
+```bash
+pip install -r requirements.txt
 ```
 
+## Usage
 
----
-##  Project Roadmap
+### Training the Model
 
-- [X] **`Task 1`**: <strike>Implement feature one.</strike>
-- [ ] **`Task 2`**: Implement feature two.
-- [ ] **`Task 3`**: Implement feature three.
+1. Make sure your dataset is structured as described above.
+2. Run the `main.py` script to start training:
 
----
-
-##  Contributing
-
-- **💬 [Join the Discussions](https://LOCAL/Deep_Learning/KeyPointDetection/discussions)**: Share your insights, provide feedback, or ask questions.
-- **🐛 [Report Issues](https://LOCAL/Deep_Learning/KeyPointDetection/issues)**: Submit bugs found or log feature requests for the `KeyPointDetection` project.
-- **💡 [Submit Pull Requests](https://LOCAL/Deep_Learning/KeyPointDetection/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
-
-<details closed>
-<summary>Contributing Guidelines</summary>
-
-1. **Fork the Repository**: Start by forking the project repository to your LOCAL account.
-2. **Clone Locally**: Clone the forked repository to your local machine using a git client.
-   ```sh
-   git clone C:\Users\shahk\Documents\Shah\Programming\Deep_Learning\KeyPointDetection
+   ```bash
+   python main.py
    ```
-3. **Create a New Branch**: Always work on a new branch, giving it a descriptive name.
-   ```sh
-   git checkout -b new-feature-x
-   ```
-4. **Make Your Changes**: Develop and test your changes locally.
-5. **Commit Your Changes**: Commit with a clear message describing your updates.
-   ```sh
-   git commit -m 'Implemented new feature x.'
-   ```
-6. **Push to LOCAL**: Push the changes to your forked repository.
-   ```sh
-   git push origin new-feature-x
-   ```
-7. **Submit a Pull Request**: Create a PR against the original project repository. Clearly describe the changes and their motivations.
-8. **Review**: Once your PR is reviewed and approved, it will be merged into the main branch. Congratulations on your contribution!
-</details>
 
-<details closed>
-<summary>Contributor Graph</summary>
-<br>
-<p align="left">
-   <a href="https://LOCAL{/Deep_Learning/KeyPointDetection/}graphs/contributors">
-      <img src="https://contrib.rocks/image?repo=Deep_Learning/KeyPointDetection">
-   </a>
-</p>
-</details>
+3. To visualize results after training, use the `visualize()` function.
 
----
+### Model Weights
 
-##  License
+After training, the model weights are saved to the `SavedModel/weights` folder:
 
-This project is protected under the [SELECT-A-LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
+```bash
+torch.save(model.state_dict(), 'SavedModel/weights/keypointsrcnn_weights_initial.pth')
+```
 
----
+To load the weights for evaluation:
 
-##  Acknowledgments
+```python
+model.load_state_dict(torch.load('SavedModel/weights/keypointsrcnn_weights_initial.pth', weights_only=False))
+```
 
-- List any resources, contributors, inspiration, etc. here.
+## Model
+
+The model is based on the `KeypointRCNN` architecture with a ResNet50 backbone. You can create the model by calling:
+
+```python
+model = get_model(num_keypoints=2)
+```
+
+This function allows you to specify the number of keypoints you want the model to predict. The default is set to 2 keypoints per object.
+
+## Acknowledgements
+
+- **PyTorch Team**: For the robust and flexible PyTorch framework.
+- **Albumentations**: For providing advanced augmentation utilities.
+- **COCO Dataset**: For the evaluation scripts and utility functions.
 
 ---
+
+Feel free to reach out with any issues or feature requests!
+
+```
+
+This `README.md` file includes all the key aspects of your project, such as installation instructions, dataset structure, file breakdowns, and how to use the model for training, evaluation, and visualization.
+
+Let me know if you need further modifications!
+```
